@@ -17,7 +17,9 @@ namespace Laboratorio_4
         private List<Producto> listaProductos;
         private Dictionary<string, object> myProducto = new Dictionary<string, object>();
 
-
+       
+        bool todoOK = true;
+        List<(TextBox txt, IValidador validador)> camposValidar = new List<(TextBox txt, IValidador validador)>();
 
 
 
@@ -31,6 +33,7 @@ namespace Laboratorio_4
         {
             
             DataGridViewRow fila = dgvProductos.Rows[e.RowIndex];
+        
             txtFolio.Text = Convert.ToInt32(fila.Cells["Folio"].Value).ToString();
             txtNombre.Text = Convert.ToString(fila.Cells["Nombre"].Value);
             txtPrecio.Text = Convert.ToDecimal(fila.Cells["Precio"].Value).ToString();
@@ -147,76 +150,25 @@ namespace Laboratorio_4
         }
         private bool datosCorrectos()
         {
-            string nombre = txtNombre.Text.Trim();
-            string precioTexto = txtPrecio.Text.Trim();
-            string cantidadTexto = txtCantidad.Text.Trim();
-
-            // VALIDAR NOMBRE
-            if (string.IsNullOrWhiteSpace(nombre))
+           
+            camposValidar.Add((txtNombre, new ValidatorTexto()));
+            camposValidar.Add((txtPrecio, new ValidadorDecimal()));
+            camposValidar.Add((txtCantidad, new ValidadorEntero()));
+            foreach (var item in camposValidar)
             {
-                MessageBox.Show("Ingrese el nombre del producto.");
-                txtNombre.Focus();
-                return false;
-            }
+                if (!item.validador.EsValido(item.txt.Text))
+                {
+                    errorProvider1.SetError(item.txt, item.validador.MensajeError);
+                    todoOK = false;
+                    break;
 
-            if (nombre.Length < 2)
-            {
-                MessageBox.Show("El nombre del producto debe tener al menos 2 caracteres.");
-                txtNombre.Focus();
-                return false;
+                }
+                else
+                {
+                    errorProvider1.SetError(item.txt, string.Empty);
+                    todoOK = true;
+                }
             }
-
-            if (nombre.Length > 100)
-            {
-                MessageBox.Show("El nombre del producto no puede superar los 100 caracteres.");
-                txtNombre.Focus();
-                return false;
-            }
-
-            // VALIDAR PRECIO
-            if (!decimal.TryParse(precioTexto, out decimal precio))
-            {
-                MessageBox.Show("Ingrese un precio válido.");
-                txtPrecio.Focus();
-                return false;
-            }
-
-            if (precio < 0)
-            {
-                MessageBox.Show("El precio no puede ser negativo.");
-                txtPrecio.Focus();
-                return false;
-            }
-
-            if (precio > 999999.99m)
-            {
-                MessageBox.Show("El precio ingresado es demasiado grande.");
-                txtPrecio.Focus();
-                return false;
-            }
-
-            // VALIDAR CANTIDAD
-            if (!int.TryParse(cantidadTexto, out int cantidad))
-            {
-                MessageBox.Show("Ingrese una cantidad válida.");
-                txtCantidad.Focus();
-                return false;
-            }
-
-            if (cantidad < 0)
-            {
-                MessageBox.Show("La cantidad no puede ser negativa.");
-                txtCantidad.Focus();
-                return false;
-            }
-
-            if (cantidad > 999999)
-            {
-                MessageBox.Show("La cantidad ingresada es demasiado grande.");
-                txtCantidad.Focus();
-                return false;
-            }
-
             return true;
         }
         private string NormalizarNombre(string texto)
