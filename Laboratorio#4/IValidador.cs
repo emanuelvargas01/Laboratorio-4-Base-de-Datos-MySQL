@@ -11,6 +11,6 @@ namespace Laboratorio_4
         bool EsValido(string valor);
         string MensajeError { get; }
     }
-    
+
 
 }
