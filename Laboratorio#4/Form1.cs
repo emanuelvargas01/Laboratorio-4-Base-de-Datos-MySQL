@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -129,7 +129,7 @@ namespace Laboratorio_4
         private void CargarDatosProductos()
         {
             string nombreNormalizado = NormalizarNombre(txtNombre.Text);
-
+            
             myProducto["Cantidad"] = int.Parse(txtCantidad.Text.Trim());
             myProducto["Precio"] = decimal.Parse(txtPrecio.Text.Trim());
             myProducto["Nombre"] = nombreNormalizado;
@@ -169,7 +169,7 @@ namespace Laboratorio_4
                     todoOK = true;
                 }
             }
-            return true;
+            return false;
         }
         private string NormalizarNombre(string texto)
         {
