@@ -176,7 +176,6 @@ namespace Laboratorio_4
             // 
             this.txtFolio.Location = new System.Drawing.Point(87, 49);
             this.txtFolio.Name = "txtFolio";
-            this.txtFolio.ReadOnly = true;
             this.txtFolio.Size = new System.Drawing.Size(186, 20);
             this.txtFolio.TabIndex = 7;
             // 
