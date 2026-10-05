@@ -169,7 +169,7 @@ namespace Laboratorio_4
                     todoOK = true;
                 }
             }
-            return false;
+            return todoOK;
         }
         private string NormalizarNombre(string texto)
         {
@@ -207,7 +207,7 @@ namespace Laboratorio_4
 
             CargarDatosProductos();
 
-            int folio;
+            int folio = 0;
 
             if (!int.TryParse(txtFolio.Text.Trim(), out folio))
             {
