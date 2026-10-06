@@ -38,7 +38,7 @@ namespace Laboratorio_4
             txtNombre.Text = Convert.ToString(fila.Cells["Nombre"].Value);
             txtPrecio.Text = Convert.ToDecimal(fila.Cells["Precio"].Value).ToString();
             txtCantidad.Text = Convert.ToInt32(fila.Cells["Cantidad"].Value).ToString();
-
+            pictureBox1.Image = fila.Cells["Imagen"].Value as Image;
             btnAgregar.Enabled = false;
             btnModificar.Enabled = true;
 
